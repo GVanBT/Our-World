@@ -9,38 +9,43 @@ public class Playermovement : MonoBehaviour
     public GameObject Player;
     public int JumpsLeft;
     public bool IsGrounded;
-
+    Animator playerAnim;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        playerAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Player movement
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * 10;
+            playerAnim.SetBool("running", true);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position += -transform.right * Time.deltaTime * 10;
+            playerAnim.SetBool("running", true);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += -transform.right * Time.deltaTime * 10;
+            transform.position += -transform.forward * Time.deltaTime * 10;
+            playerAnim.SetBool("running", true);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += -transform.forward * Time.deltaTime * 10;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
             transform.position += transform.right * Time.deltaTime * 10;
+            playerAnim.SetBool("running", true);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (JumpsLeft > 0)
             {
                 Player.GetComponent<Rigidbody>().AddForce( 0,5 / 2 * 3,0, ForceMode.Impulse);
+                playerAnim.SetBool("jumping", true);
                 //transform.position += transform.up * Time.deltaTime * 50 * 5f;
                 JumpsLeft--;
             }
@@ -62,6 +67,7 @@ public class Playermovement : MonoBehaviour
         {
             IsGrounded = true;
             Debug.Log("Player made contact with ground!");
+            playerAnim.SetBool("jumping", false);
         }
 
         if (IsGrounded && JumpsLeft < 3 && Player.GetComponent<Rigidbody>().velocity.y == 0)
