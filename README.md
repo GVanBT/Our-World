@@ -3,3 +3,5 @@
 The game uses a simple jump mechanic.
 # Collectibles
 The game uses a simple collectibles system using tags and collission detection to register pick ups.
+# Animations
+It includes basic animations for the player.
