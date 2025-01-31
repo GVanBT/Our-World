@@ -14,6 +14,7 @@ public class PickUpSystem : MonoBehaviour
         if(other.transform.tag == "Collectible")
         {
             Collectible++;
+            CollectibleText.text = "Burgers collected: " + Collectible.ToString();
             Debug.Log(Collectible);
             Destroy(other.gameObject);
         }
